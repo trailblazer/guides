@@ -1,0 +1,36 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    declarative (0.0.8)
+      uber (>= 0.0.15)
+    diff-lcs (1.2.5)
+    pipetree (0.1.0)
+      uber
+    rspec (3.5.0)
+      rspec-core (~> 3.5.0)
+      rspec-expectations (~> 3.5.0)
+      rspec-mocks (~> 3.5.0)
+    rspec-core (3.5.4)
+      rspec-support (~> 3.5.0)
+    rspec-expectations (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-mocks (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-support (3.5.0)
+    trailblazer-operation (0.0.10)
+      declarative
+      pipetree (>= 0.1.0, < 0.2.0)
+      uber (>= 0.1.0, < 0.2.0)
+    uber (0.1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rspec
+  trailblazer-operation (>= 0.0.10)
+
+BUNDLED WITH
+   1.12.5
