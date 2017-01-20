@@ -100,3 +100,34 @@ module Success
   end
 
 end
+
+module Input
+
+  RSpec.describe "Create" do
+    #:input
+    it do
+      result = Post::Create.( { healthy: "yes" } )
+      #=> Hello, Trailblazer!
+      #=> How are you?
+      #=> Good to hear, have a nice day!
+      expect(result.success?).to be true
+    end
+    #:input end
+
+    #:input-false
+    it do
+      result = Post::Create.( { healthy: "i'm sad!" } )
+      #=> Hello, Trailblazer!
+      #=> How are you?
+      expect(result.failure?).to be true
+    end
+    #:input-false end
+
+    it do
+      #:input-call
+      result = Post::Create.( { healthy: "yes" } )
+      #:input-call end
+    end
+  end
+
+end
