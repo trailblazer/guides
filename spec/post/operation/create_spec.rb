@@ -106,7 +106,7 @@ module Input
   RSpec.describe "Create" do
     #:input
     it do
-      result = Post::Create.( { healthy: "yes" } )
+      result = Post::Create.( { happy: "yes" } )
       #=> Hello, Trailblazer!
       #=> How are you?
       #=> Good to hear, have a nice day!
@@ -116,7 +116,7 @@ module Input
 
     #:input-false
     it do
-      result = Post::Create.( { healthy: "i'm sad!" } )
+      result = Post::Create.( { happy: "i'm sad!" } )
       #=> Hello, Trailblazer!
       #=> How are you?
       expect(result.failure?).to be true
@@ -125,9 +125,24 @@ module Input
 
     it do
       #:input-call
-      result = Post::Create.( { healthy: "yes" } )
+      result = Post::Create.( { happy: "yes" } )
       #:input-call end
     end
   end
 
+end
+
+module Failure
+
+  RSpec.describe "Create" do
+    #:failure
+    it do
+      result = Post::Create.( { happy: false } )
+      #=> Hello, Trailblazer!
+      #=> How are you?
+      expect(result.failure?).to be true
+      expect(result["joke"]).to eq "Broken pencils are pointless."
+    end
+    #:failure end
+  end
 end
