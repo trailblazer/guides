@@ -2,7 +2,7 @@ require 'trailblazer/operation'
 
 module Op1
   #:op
-  module Post
+  module BlogPost
     class Create < Trailblazer::Operation
     end
   end
@@ -11,7 +11,7 @@ end
 
 module Op2
   #:step
-  module Post
+  module BlogPost
     class Create < Trailblazer::Operation
       step :hello_world!
 
@@ -25,7 +25,7 @@ end
 
 module ReturnValue
   #:return-value
-  module Post
+  module BlogPost
     class Create < Trailblazer::Operation
       step :hello_world!
 
@@ -40,7 +40,7 @@ end
 
 module MultipleSteps
   #:steps
-  module Post
+  module BlogPost
     class Create < Trailblazer::Operation
       step :hello_world!
       step :how_are_you?
@@ -61,7 +61,7 @@ end
 
 module BreakingThings
   #:breaking
-  module Post
+  module BlogPost
     class Create < Trailblazer::Operation
       step :hello_world!
       step :how_are_you?
@@ -82,7 +82,7 @@ end
 
 module Success
   #:success
-  module Post
+  module BlogPost
     class Create < Trailblazer::Operation
       success :hello_world!
       success :how_are_you?
@@ -101,7 +101,7 @@ end
 
 module Input
   #:input
-  module Post
+  module BlogPost
     class Create < Trailblazer::Operation
       success :hello_world!
       step    :how_are_you?
@@ -127,7 +127,7 @@ end
 
 module Failure
   #:failure
-  module Post
+  module BlogPost
     class Create < Trailblazer::Operation
       success :hello_world!
       step    :how_are_you?
