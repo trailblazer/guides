@@ -33,4 +33,4 @@ DEPENDENCIES
   trailblazer-operation (>= 0.0.10)
 
 BUNDLED WITH
-   1.12.5
+   1.13.6
