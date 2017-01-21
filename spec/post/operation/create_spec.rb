@@ -95,7 +95,7 @@ module Input
   RSpec.describe Input::BlogPost::Create do
     #:input
     it do
-      result = BlogPost::Create.(happy: 'yes')
+      result = Post::Create.( { happy: "yes" } )
       #=> Hello, Trailblazer!
       #=> How are you?
       #=> Good to hear, have a nice day!
@@ -114,7 +114,7 @@ module Input
 
     it do
       #:input-call
-      result = BlogPost::Create.(happy: 'yes')
+      result = BlogPost::Create.(happy: "yes")
       #:input-call end
     end
   end
@@ -128,7 +128,7 @@ module Failure
       #=> Hello, Trailblazer!
       #=> How are you?
       expect(result.failure?).to be_truthy
-      expect(result['joke']).to eq 'Broken pencils are pointless.'
+      expect(result["joke"]).to eq "Broken pencils are pointless."
     end
     #:failure end
   end
