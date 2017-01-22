@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
-gem "trailblazer-operation", ">= 0.0.10"
+gem "trailblazer", ">= 2.0.2"
+gem "activerecord"
+gem "dry-validation"
 
 gem "rspec"
