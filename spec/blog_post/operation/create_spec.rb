@@ -1,7 +1,7 @@
 module Op1
   #:fresh
   require "spec_helper"
-  require_relative "../../../app/post/operation/create"
+  require_relative "../../../app/blog_post/operation/create"
 
   RSpec.describe BlogPost::Create do
     it do
