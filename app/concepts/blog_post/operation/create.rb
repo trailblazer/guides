@@ -1,3 +1,5 @@
+require_relative "../lib/notification"
+
 module Procedural
 
   #:procedural
@@ -13,7 +15,7 @@ module Procedural
       model.update_attributes(params[:blog_post])
 
       if model.save
-        Notification.(current_user, model)
+        BlogPost::Notification.(current_user, model)
       else
         return false
       end
