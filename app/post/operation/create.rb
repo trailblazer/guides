@@ -148,7 +148,7 @@ module Failure
       step    :how_are_you?
       success :enjoy_your_day!
       failure :tell_joke!
-
+      #~impl
       def hello_world!(options, *)
         puts "Hello, Trailblazer!"
       end
@@ -166,6 +166,7 @@ module Failure
       def tell_joke!(options, *)
         options["joke"] = "Broken pencils are pointless."
       end
+      #~impl end
     end
   end
   #:failure end

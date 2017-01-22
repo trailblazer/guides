@@ -106,7 +106,7 @@ module Input
   RSpec.describe BlogPost::Create do
     #:input
     it do
-      result = BlogPost::Create.( {happy: "yes" } )
+      result = BlogPost::Create.( { happy: "yes" } )
       #=> Hello, Trailblazer!
       #=> How are you?
       #=> Good to hear, have a nice day!
@@ -116,7 +116,7 @@ module Input
 
     #:input-false
     it do
-      result = BlogPost::Create.( {happy: "i'm sad!" } )
+      result = BlogPost::Create.( { happy: "i'm sad!" } )
       #=> Hello, Trailblazer!
       #=> How are you?
       expect(result.failure?).to be_truthy
@@ -125,7 +125,7 @@ module Input
 
     it do
       #:input-call
-      result = BlogPost::Create.( {happy: "yes" } )
+      result = BlogPost::Create.( { happy: "yes" } )
       #:input-call end
     end
   end
@@ -137,7 +137,7 @@ module Failure
   RSpec.describe BlogPost::Create do
     #:failure
     it do
-      result = BlogPost::Create.( {happy: false } )
+      result = BlogPost::Create.( { happy: false } )
       #=> Hello, Trailblazer!
       #=> How are you?
       expect(result.failure?).to be_truthy
