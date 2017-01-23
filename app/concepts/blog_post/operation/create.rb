@@ -1,6 +1,7 @@
 require_relative "../lib/notification"
 
 module Procedural
+  BlogPost = Class.new(BlogPost)
 
   #:procedural
   require "trailblazer"
@@ -27,7 +28,7 @@ module Procedural
 end
 
 module ProceduralSet
-  BlogPost = ::BlogPost
+  BlogPost = Class.new(BlogPost)
 
   class BlogPost::Create < Trailblazer::Operation
     step :do_everything!
@@ -53,7 +54,7 @@ module ProceduralSet
 end
 
 module FirstSteps
-  BlogPost = ::BlogPost
+  BlogPost = Class.new(BlogPost)
 
   #:firststeps
   class BlogPost::Create < Trailblazer::Operation
@@ -80,5 +81,36 @@ module FirstSteps
     end
   end
   #:firststeps end
+
+end
+
+module Policy
+  BlogPost = Class.new(BlogPost)
+
+  #:policy
+  class BlogPost::Create < Trailblazer::Operation
+    step Policy::Guard( :authorize! )
+    step :model!
+    step :persist!
+    step :notify!
+
+    def authorize!(options, current_user:, **)
+      current_user.signed_in?
+    end
+
+    def model!(options, **)
+      options["model"] = BlogPost.new
+    end
+
+    def persist!(options, params:, model:, **)
+      model.update_attributes(params[:blog_post])
+      model.save
+    end
+
+    def notify!(options, current_user:, model:, **)
+      BlogPost::Notification.(current_user, model)
+    end
+  end
+  #:policy end
 
 end
