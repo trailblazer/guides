@@ -14,7 +14,7 @@ module BlogPost::Contract
     #:validation
     validation do
       required(:title).filled
-      required(:body).filled?(gt?: 9)
+      required(:body).maybe(min_size?: 9)
     end
     #:validation end
   end
