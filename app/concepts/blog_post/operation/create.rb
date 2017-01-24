@@ -192,7 +192,7 @@ module Persist
     end
 
     def notify!(options, current_user:, model:, **)
-      BlogPost::Notification.(current_user, model)
+      options["result.notify"] = BlogPost::Notification.(current_user, model)
     end
   end
   #:persist end
