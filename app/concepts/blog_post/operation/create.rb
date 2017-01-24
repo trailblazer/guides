@@ -112,5 +112,63 @@ module Policy
     end
   end
   #:policy end
+end
 
+module Model
+  BlogPost = Class.new(BlogPost)
+
+  #:model
+  class BlogPost::Create < Trailblazer::Operation
+    step Policy::Guard( :authorize! )
+    step Model( BlogPost, :new )
+    step :persist!
+    step :notify!
+
+    def authorize!(options, current_user:, **)
+      current_user.signed_in?
+    end
+
+    def persist!(options, params:, model:, **)
+      model.update_attributes(params[:blog_post])
+      model.save
+    end
+
+    def notify!(options, current_user:, model:, **)
+      BlogPost::Notification.(current_user, model)
+    end
+  end
+  #:model end
+end
+
+module Contract
+  BlogPost = Class.new(BlogPost)
+
+  #:contract
+  require_relative "../contract/create"
+
+  class BlogPost::Create < Trailblazer::Operation
+    step Policy::Guard( :authorize! )
+    step Model( BlogPost, :new )
+    #:contract-build
+    step Contract::Build( constant: BlogPost::Contract::Create )
+    #:contract-build end
+    #:contract-validate
+    step Contract::Validate( key: :blog_post )
+    #:contract-validate end
+    step :persist!
+    step :notify!
+
+    def authorize!(options, current_user:, **)
+      current_user.signed_in?
+    end
+
+    def persist!(options, params:, model:, **)
+      model.save
+    end
+
+    def notify!(options, current_user:, model:, **)
+      BlogPost::Notification.(current_user, model)
+    end
+  end
+  #:contract end
 end

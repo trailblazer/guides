@@ -76,15 +76,73 @@ module Policy
     let (:signed_in) { User.new(true) }
     let (:pass_params) { { blog_post: { title: "Puns: Ode to Joy" } } }
 
+    #:guard-result
     it "fails with anonymous" do
       result = BlogPost::Create.(pass_params, "current_user" => anonymous)
 
       expect(result).to be_failure
       expect(result["model"]).to be_nil
+      expect(result["result.policy.default"]).to be_failure
     end
+    #:guard-result end
 
     it "works with known user" do
       result = BlogPost::Create.(pass_params, "current_user" => signed_in)
+
+      expect(result).to be_success
+      expect(result["model"]).to be_persisted
+      expect(result["model"].title).to eq("Puns: Ode to Joy")
+    end
+  end
+end
+
+module Model
+  RSpec.describe BlogPost::Create do
+    let (:anonymous) { User.new(false) }
+    let (:signed_in) { User.new(true) }
+    let (:pass_params) { { blog_post: { title: "Puns: Ode to Joy" } } }
+
+    #:guard-result
+    it "fails with anonymous" do
+      result = BlogPost::Create.(pass_params, "current_user" => anonymous)
+
+      expect(result).to be_failure
+      expect(result["model"]).to be_nil
+      expect(result["result.policy.default"]).to be_failure
+    end
+    #:guard-result end
+
+    it "works with known user" do
+      result = BlogPost::Create.(pass_params, "current_user" => signed_in)
+
+      expect(result).to be_success
+      expect(result["model"]).to be_persisted
+      expect(result["model"].title).to eq("Puns: Ode to Joy")
+    end
+  end
+end
+
+ module Contract
+  RSpec.describe BlogPost::Create do
+    let (:anonymous) { User.new(false) }
+    let (:signed_in) { User.new(true) }
+    let (:pass_params) { { blog_post: { title: "Puns: Ode to Joy" } } }
+
+    it "fails with anonymous" do
+      result = BlogPost::Create.(pass_params, "current_user" => anonymous)
+
+      expect(result).to be_failure
+      expect(result["model"]).to be_nil
+      expect(result["result.policy.default"]).to be_failure
+    end
+
+    it "works with known user" do
+      #:validation-pass
+      result = BlogPost::Create.(
+        { blog_post: { title: "Puns: Ode to Joy" } },
+        "current_user" => signed_in
+      )
+      #:validation-pass end
 
       expect(result).to be_success
       expect(result["model"]).to be_persisted
