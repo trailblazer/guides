@@ -1,4 +1,5 @@
 require_relative "../lib/notification"
+require 'trailblazer/operation'
 
 module Procedural
   BlogPost = Class.new(BlogPost)
