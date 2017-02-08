@@ -18,7 +18,7 @@ module BlogPost::Contract
       required(:title).filled
       required(:author).filled
       required(:user_id).filled
-      required(:body).maybe(min_size?: 9)
+      required(:body).filled(min_size?: 9)
     end
     #:validation end
   end
