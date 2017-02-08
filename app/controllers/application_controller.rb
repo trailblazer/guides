@@ -8,26 +8,27 @@ class ApplicationController < ActionController::Base
   end
   
   rescue_from ApplicationController::NotAuthorizedError do
-    flash[:alert] = "You are not authorized mate!"
+    # not authorized flash message
     redirect_to posts_path
   end
 
-  
+  #:render
   def render(cell_constant, model, options: {})
     super(
           html: cell(
                 cell_constant,
                 model,
-                { layout: Blog::Cell::Layout,
-                  context: {current_user: tyrant.current_user, flash: flash}
+                { layout: BlogPost::Cell::Layout,
+                  context: {current_user: current_user}
                   }.merge(options))
           )
   end
+  #:render end
 
 
-# private
-#   def _run_options(options)
-#     options.merge("current_user" => tyrant.current_user )
-#   end
+private
+  def _run_options(options)
+    options.merge("current_user" => tyrant.current_user )
+  end
 end
 #:appcontroller end

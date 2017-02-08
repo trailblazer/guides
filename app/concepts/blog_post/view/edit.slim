@@ -1,0 +1,35 @@
+.row
+  h1 Edit Post
+
+  = trb_form_for(model, "/posts/#{model.id}", method: :patch, builder: :bootstrap4, id: :edit_post) do |f|
+    = f.input :id, value: model.id, type: "hidden"
+    .row
+      .col-sm-12
+        = f.input :title, placeholder: "Title"
+    .row
+      .col-sm-12
+        = f.input :subtitle, placeholder: "Subtitle"
+    .row
+      .col-sm-12
+        = f.textarea :body, placeholder: "What do you wanna say?"
+    .row
+      .col-sm-12
+        - if current_user != nil
+          - if current_user.email == "admin@email.com"
+            = "by " + user_name_admin
+            = f.input :author, value: user_name_admin, type: "hidden"
+            = f.input :user_id, value: model.user_id, type: "hidden"
+          - else
+            = "by " + user_name
+            = f.input :author, value: user_name, type: "hidden"
+            = f.input :user_id, value: current_user.id, type: "hidden"
+        -else
+          = f.input :author, placeholder: "author"
+      .row
+        .col-sm-6  
+          = f.submit(value: "Save")
+        .col-sm-4
+          h6 = delete
+        .col-sm-2
+          h6 = back
+

@@ -1,0 +1,19 @@
+.row.new
+  h1 New Post
+
+  = trb_form_for(model, "/posts", method: :post, builder: :bootstrap4, id: :new_post) do |f|
+    .row
+      .col-sm-12
+        = f.input :title, placeholder: "Title"
+    .row
+      .col-sm-12
+        = f.textarea :body, placeholder: "What do you wanna say?"
+    .row
+      .col-sm-12
+        = "by " + user_name
+        = f.input :author, value: user_name, type: "hidden"
+        = f.input :user_id, value: current_user.id, type: "hidden"
+    .row
+      .col-sm-12  
+          = f.submit(value: "Create Post")
+

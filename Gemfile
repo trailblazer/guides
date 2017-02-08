@@ -5,4 +5,14 @@ gem "activerecord", "= 4.2.6"
 gem "sqlite3"
 gem "dry-validation"
 
-gem "rspec"
+group :test do
+  gem "memory_test_fix"
+  gem "minitest-rails-capybara"
+  gem "minitest-line"
+  gem "minitest-bang"
+end
+
+gem 'formular', :github => "trailblazer/formular"
+gem 'trailblazer-cells'
+gem 'trailblazer-rails'
+gem 'cells-rails'

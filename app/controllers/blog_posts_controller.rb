@@ -7,13 +7,15 @@ class PostsController < ApplicationController
   end
   #:new end
 
+  #:create
   def create
     run BlogPost::Create do |result|
-      flash[:notice] = "#{result["model"].title} has been created and it will publiched if it will be approved by the Administrator. Thank you!"
+      # flash message => "#{result["model"].title} has been created"
       return redirect_to "/posts"
     end
     render BlogPost::Cell::New, result["contract.default"]
   end
+  #:create end
 
   def show
     run BlogPost::Show

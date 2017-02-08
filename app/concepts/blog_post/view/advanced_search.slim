@@ -1,0 +1,75 @@
+script src="bootstrap-datetimepicker"
+
+h1 Advanced Search:
+.text-left.new
+  h3 Select the searching criteria:
+  = form_tag search_posts_path, method: :post, id: "advanced_search" do
+    = hidden_field_tag :advance, "true"
+    .p.row
+      .col-sm-2
+        = label_tag "Title:"
+      .col-sm-5.text-center 
+        = text_field_tag :title
+    .p.row
+      .col-sm-2
+        = label_tag "Subtitle:"
+      .col-sm-5.text-center
+        = text_field_tag :subtitle
+    .p.row
+      .col-sm-2
+        = label_tag "Body:"
+      .col-sm-5.text-center 
+        = text_field_tag :body
+    .p.row
+      .col-sm-2  
+        = label_tag "Author:"
+      .col-sm-5.text-center 
+        = text_field_tag :author
+    .p.row
+      .col-sm-2
+        = label_tag "When:"
+      .col-sm-5.text-center 
+        h6.row
+          = label_tag :from
+        .row.text-center
+          = datetime_field_tag :from, nil, class: "get_from"
+      .col-sm-5.text-center 
+        h6.row
+          = label_tag :to
+        .row
+          = datetime_field_tag :to, nil, class: "get_to"
+    = submit_tag "Search"
+
+
+javascript:
+  $(".get_from").datetimepicker({
+      format: "dd-mm-yyyy",
+      autoclose: true,
+      todayBtn: true,
+      todayHighlight: true,
+      pickerPosition: "top-left",
+      minView: 2 <!-- to not show the hours/mins selection -->
+    });
+
+  $(".get_to").datetimepicker({
+    format: "dd-mm-yyyy",
+    autoclose: true,
+    todayBtn: true,
+    todayHighlight: true,
+    pickerPosition: "top-left",
+    minView: 2 <!-- to not show the hours/mins selection -->
+  });
+
+  $(".get_from")
+  .datetimepicker()
+  .on('changeDate', function (e){
+    $('.get_to').datetimepicker('setStartDate', e.date);
+  });
+
+  $(".get_to")
+  .datetimepicker()
+  .on('changeDate', function (e){
+    $('.get_from').datetimepicker('setEndDate', e.date);
+  });
+
+
