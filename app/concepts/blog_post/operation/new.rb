@@ -1,3 +1,5 @@
+require 'trailblazer'
+
 #:newop
 require_relative "../contract/create"
 
@@ -7,7 +9,7 @@ class BlogPost::New < Trailblazer::Operation
   step Contract::Build( constant: BlogPost::Contract::Create )
 
   def authorize!(options, current_user:, **)
-    current_user.signed_in?
+    current_user == nil ? false : current_user.signed_in
   end 
 end
 #:newop end

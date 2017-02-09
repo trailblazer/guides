@@ -7,6 +7,7 @@ gem "dry-validation"
 
 gem "rake", "~> 10.0"
 gem 'minitest'
+gem 'bundler'
 
 gem 'formular', :github => "trailblazer/formular"
 gem 'trailblazer-cells'

@@ -7,6 +7,7 @@ module User::Contract
 
     property :email
     property :firstname
+    property :signed_in
 
     validation do
       required(:email).filled

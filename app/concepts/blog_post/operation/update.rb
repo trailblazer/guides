@@ -2,10 +2,10 @@ require 'trailblazer/operation'
 
 #:createop
 require_relative "../lib/notification"
-require_relative "../operation/new"
+require_relative "../operation/edit"
 
 class BlogPost::Create < Trailblazer::Operation
-  step Nested(BlogPost::New)
+  step Nested(BlogPost::Edit)
   step Contract::Validate()
   step Contract::Persist()
   step :notify!

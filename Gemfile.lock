@@ -142,6 +142,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord (= 4.2.6)
+  bundler
   cells-rails
   dry-validation
   formular!
