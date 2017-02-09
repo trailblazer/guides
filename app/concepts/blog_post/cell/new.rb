@@ -17,5 +17,4 @@ module BlogPost::Cell
 
   end
 end
-
 #:newcell end

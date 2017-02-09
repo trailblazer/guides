@@ -1,19 +1,12 @@
 .post-preview
-  - if owner? and !admin? 
-    h5 = status
   .post-title
     = title
   .post-subtitle
     = subtitle
   .post-subtitle
     = body
-.row
-  - if admin?
-     = form_tag approve_posts_path, method: :post, id: "status_form"  do
-      = hidden_field_tag :id, model.id
-      h6 = select_tag :status, options_for_select([ "Approved", "Declined", "Pending" ], model.status)
-      = text_area_tag :message, "Message to #{model.author}....", size: "30x5"
-      h5 = submit_tag "Update", data: {confirm: "Are you sure?"}
+  p.post-meta
+    = "Posted by #{author} on #{time.strftime("%d %B %Y")}"
 .row
   .col-sm-3.text-center
     h6 = edit

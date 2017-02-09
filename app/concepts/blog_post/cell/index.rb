@@ -9,21 +9,9 @@ module Post::Cell
       current_user == nil ? false : current_user.email == "admin@email.com"
     end
 
-    def caption
-      if params["status"] != nil and admin?
-        captions = {
-        "Pending" => "Here are the pending posts:",
-        "Approved" => "Here are the approved posts:",
-        "Declined" => "Here are the declined posts:",
-        }
-        return captions[params["status"]]
-      end
-    end 
-
     def total
-      if model.size == 0
-        return "No posts"
-      end
+      return "No posts" if model.size == 0
     end
+    
   end
 end

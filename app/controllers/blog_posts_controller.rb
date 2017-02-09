@@ -1,5 +1,5 @@
 #:postcontroller
-class PostsController < ApplicationController
+class BlogPostsController < ApplicationController
   #:new
   def new
     run BlogPost::New
@@ -17,15 +17,19 @@ class PostsController < ApplicationController
   end
   #:create end
 
+  #:show
   def show
     run BlogPost::Show
     render BlogPost::Cell::Show, result["model"]
   end
-  
+  #:show end
+
+  #:index
   def index
     run BlogPost::Index
     render BlogPost::Cell::Index, result["model"]
   end
+  #:index end
 
   def edit
     run BlogPost::Edit

@@ -1,8 +1,0 @@
-.row
-  = form_tag search_posts_path, method: :post, id: "search" do |f|
-    = hidden_field_tag :advance, "false"
-    = text_field_tag :keynote
-    .col-sm-6.text-left
-      = submit_tag "Search"
-    .col-sm-6.text-right
-      h6 = link_to "Advanced", advanced_search_posts_path
