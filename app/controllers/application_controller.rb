@@ -25,10 +25,11 @@ class ApplicationController < ActionController::Base
   end
   #:render end
 
-
+#:run_options
 private
   def _run_options(options)
     options.merge("current_user" => tyrant.current_user )
   end
+#:run_options end
 end
 #:appcontroller end

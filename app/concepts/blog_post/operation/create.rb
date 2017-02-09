@@ -10,10 +10,6 @@ class BlogPost::Create < Trailblazer::Operation
   step Contract::Persist()
   step :notify!
 
-  def authorize!(options, current_user:, **)
-    current_user.signed_in?
-  end
-
   def notify!(options, current_user:, model:, **)
     options["result.notify"] = BlogPost::Notification.(current_user, model)
   end
