@@ -1,4 +1,4 @@
-module Post::Cell
+module BlogPost::Cell
   class Edit < New
 
     def back

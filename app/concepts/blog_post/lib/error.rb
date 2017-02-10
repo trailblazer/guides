@@ -1,7 +1,8 @@
 #:error
 class BlogPost::Error 
+  extend Uber::Callable
   def self.call(options, *)
-    false #raise error or return a Not found post
+    options["model"] = BlogPost.new(title: "Post Not Found!")
   end
 end
 #:error end

@@ -1,4 +1,5 @@
-module Post::Cell  
+#item
+module BlogPost::Cell  
   class Item < Trailblazer::Cell
 
     def title
@@ -19,3 +20,4 @@ module Post::Cell
     
   end
 end
+#item end

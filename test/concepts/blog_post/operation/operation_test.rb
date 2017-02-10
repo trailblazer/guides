@@ -55,16 +55,32 @@ class BlogPostsOperationTest < MiniTest::Spec
   end
   #:create end
 
-  #:show
-  it "show post" do
+  #:not_found
+  it "post not found" do
     user = User::Create.({email: "user@email.com", signed_in: true})
     user.success?.must_equal true
 
     post = BlogPost::Create.({title: "Title", body: "Body more than 9", author: user["model"].email, user_id: user["model"].id}, "current_user" => user["model"])
+    post.success?.must_equal true
 
-    result = BlogPost::Show.({id: post["model"].id})
-    result.success?.must_equal true
+    result = BlogPost::Show.({id: 100})
+    result.failure?.must_equal true
+    result["model"].title.must_equal "Post Not Found!"
+    
   end
+  #:not_found end
+
+  #:show
+  # it "show post" do
+  #   user = User::Create.({email: "user@email.com", signed_in: true})
+  #   user.success?.must_equal true
+
+  #   post = BlogPost::Create.({title: "Title", body: "Body more than 9", author: user["model"].email, user_id: user["model"].id}, "current_user" => user["model"])
+  #   post.success?.must_equal true
+
+  #   result = BlogPost::Show.({id: post["model"].id})
+  #   result.success?.must_equal true
+  # end
   #:show end
 
   #:nouser
