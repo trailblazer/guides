@@ -3,6 +3,8 @@ require 'minitest/autorun'
 require 'active_record'
 require 'trailblazer/operation'
 
+require_relative "../app/controllers/application_controller"
+
 class MiniTest::Spec
   after do
     ::BlogPost.delete_all

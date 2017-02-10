@@ -4,7 +4,7 @@ require 'trailblazer/operation'
 require_relative "../lib/notification"
 require_relative "../operation/edit"
 
-class BlogPost::Create < Trailblazer::Operation
+class BlogPost::Update < Trailblazer::Operation
   step Nested(BlogPost::Edit)
   step Contract::Validate()
   step Contract::Persist()

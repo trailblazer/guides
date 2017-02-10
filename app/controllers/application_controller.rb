@@ -1,3 +1,5 @@
+require 'action_controller'
+
 #:appcontroller
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
