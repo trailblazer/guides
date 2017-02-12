@@ -9,7 +9,7 @@ gem "rake", "~> 10.0"
 gem 'minitest'
 gem 'bundler'
 
-gem 'formular', :github => "trailblazer/formular"
+gem 'simple_form'
 gem 'trailblazer-cells'
 gem 'trailblazer-rails'
 gem 'cells-rails'

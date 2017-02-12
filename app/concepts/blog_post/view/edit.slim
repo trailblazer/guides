@@ -1,23 +1,22 @@
 .row
   h1 Edit Post
 
-  = trb_form_for(model, "/posts/#{model.id}", method: :patch, builder: :bootstrap4, id: :edit_post) do |f|
-    = f.input :id, value: model.id, type: "hidden"
+  = simple_form_for model do |f|
     .row
       .col-sm-12
-        = f.input :title, placeholder: "Title"
+        = f.input :title, placeholder: "Title", label: false
     .row
       .col-sm-12
-        = f.input :subtitle, placeholder: "Subtitle"
+        = f.input :subtitle, placeholder: "Subtitle", label: false
     .row
       .col-sm-12
-        = f.textarea :body, placeholder: "What do you wanna say?"
+        = f.textarea :body, placeholder: "What do you wanna say?", label: false
     .row
       .col-sm-12
         = "by " + user_name
     .row
       .col-sm-6  
-        = f.submit(value: "Save")
+        = f.submit 'Save'
       .col-sm-4
         h6 = delete
       .col-sm-2
