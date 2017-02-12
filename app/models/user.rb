@@ -1,5 +1,5 @@
-User = Struct.new(:signed_in) do
-  def signed_in?
-    signed_in
-  end
+#:model
+class User < ActiveRecord::Base
+  has_many :blog_post
 end
+#:model end
