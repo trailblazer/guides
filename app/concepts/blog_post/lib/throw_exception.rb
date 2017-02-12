@@ -1,3 +1,4 @@
+#:exception
 require_relative "../../../controllers/application_controller"
 
 class BlogPost::ThrowException 
@@ -6,3 +7,4 @@ class BlogPost::ThrowException
     raise ApplicationController::NotAuthorizedError
   end
 end 
+#:exception end

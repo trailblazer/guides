@@ -6,13 +6,15 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  #:notauthorized
   class NotAuthorizedError < RuntimeError
   end
   
   rescue_from ApplicationController::NotAuthorizedError do
-    # not authorized flash message
+    flash[:alert] = "You are not authorized!"
     redirect_to posts_path
   end
+  #:notauthorized end
 
   #:render
   def render(cell_constant, model, options: {})
@@ -21,7 +23,7 @@ class ApplicationController < ActionController::Base
                 cell_constant,
                 model,
                 { layout: BlogPost::Cell::Layout,
-                  context: {current_user: current_user}
+                  context: {current_user: current_user, flash: flash}
                   }.merge(options))
           )
   end

@@ -66,24 +66,23 @@ class BlogPostsOperationTest < MiniTest::Spec
     result = BlogPost::Show.({id: 100})
     result.failure?.must_equal true
     result["model"].title.must_equal "Post Not Found!"
-    
   end
   #:not_found end
 
   #:show
-  # it "show post" do
-  #   user = User::Create.({email: "user@email.com", signed_in: true})
-  #   user.success?.must_equal true
+  it "show post" do
+    user = User::Create.({email: "user@email.com", signed_in: true})
+    user.success?.must_equal true
 
-  #   post = BlogPost::Create.({title: "Title", body: "Body more than 9", author: user["model"].email, user_id: user["model"].id}, "current_user" => user["model"])
-  #   post.success?.must_equal true
+    post = BlogPost::Create.({title: "Title", body: "Body more than 9", author: user["model"].email, user_id: user["model"].id}, "current_user" => user["model"])
+    post.success?.must_equal true
 
-  #   result = BlogPost::Show.({id: post["model"].id})
-  #   result.success?.must_equal true
-  # end
+    result = BlogPost::Show.({id: post["model"].id})
+    result.success?.must_equal true
+  end
   #:show end
 
-  #:nouser
+  #:notfoundedit
   it "a user must be signed in to update" do 
     owner = User::Create.({email: "owner@email.com", signed_in: true})
     owner.success?.must_equal true
@@ -92,11 +91,11 @@ class BlogPostsOperationTest < MiniTest::Spec
     post.success?.must_equal true
     post["model"].title.must_equal "Title"
 
-    result = BlogPost::Update.({id: post["model"].id}, "current_user" => nil)
+    result = BlogPost::Update.({id: post["model"].id+1}, "current_user" => owner["model"])
     result.failure?.must_equal true
-    result["result.policy.default"].success?.must_equal false
+    result["model"].title.must_equal "Post Not Found!"
   end
-  #:nouser end
+  #:notfoundedit end
 
   #:wronguser
   it "only owner or admin update post" do 
@@ -113,6 +112,15 @@ class BlogPostsOperationTest < MiniTest::Spec
     post.success?.must_equal true
     post["model"].title.must_equal "Title"
 
+    #no user
+    assert_raises ApplicationController::NotAuthorizedError do
+      BlogPost::Update.(
+        {id: post["model"].id,
+        title: "NewTitle"},
+        "current_user" => nil)
+    end
+
+    #wrong user
     assert_raises ApplicationController::NotAuthorizedError do
       BlogPost::Update.(
         {id: post["model"].id,

@@ -1,3 +1,4 @@
+#:edit
 module BlogPost::Cell
   class Edit < New
 
@@ -10,3 +11,4 @@ module BlogPost::Cell
     end
   end
 end
+#:edit end

@@ -1,12 +1,12 @@
 require 'trailblazer/operation'
 
-#:createop
+#:updateop
 require_relative "../lib/notification"
 require_relative "../operation/edit"
 
 class BlogPost::Update < Trailblazer::Operation
   step Nested(BlogPost::Edit)
-  step Contract::Validate()
+  step Contract::Validate(key: :blog_post)
   step Contract::Persist()
   step :notify!
 
@@ -14,4 +14,4 @@ class BlogPost::Update < Trailblazer::Operation
     options["result.notify"] = BlogPost::Notification.(current_user, model)
   end
 end
-#:createop end
+#:updateop end
