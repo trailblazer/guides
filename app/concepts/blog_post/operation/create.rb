@@ -6,7 +6,7 @@ require_relative "../operation/new"
 
 class BlogPost::Create < Trailblazer::Operation
   step Nested(BlogPost::New)
-  step Contract::Validate(key: :blog_post)
+  step Contract::Validate()
   step Contract::Persist()
   step :notify!
 

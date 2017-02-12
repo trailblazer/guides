@@ -31,10 +31,10 @@ class BlogPostsController < ApplicationController
   end
   #:index end
 
-  #edit-update
+  #:edit-update
   def edit
     run BlogPost::Edit
-    render BlogPost::Cell::Edit, result["model"]
+    render BlogPost::Cell::Edit, result["contract.default"]
   end
 
   def update
@@ -45,15 +45,17 @@ class BlogPostsController < ApplicationController
 
     render BlogPost::Cell::Edit, result["contract.default"]
   end
-  #edit-update end
+  #:edit-update end
 
+  #:delete
   def destroy
     run BlogPost::Delete do
       flash[:alert] = "Post deleted"
       return redirect_to "/posts"
     end
 
-    render BlogPost::Cell::Edit, result["model"]
+    render BlogPost::Cell::Edit, result["contract.default"]
   end
+  #:delete end
 end
 #:postcontroller end

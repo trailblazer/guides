@@ -4,6 +4,7 @@ require_relative "../../../../app/models/blog_post"
 require_relative "../../../../app/concepts/blog_post/operation/create"  
 require_relative "../../../../app/concepts/blog_post/operation/show"  
 require_relative "../../../../app/concepts/blog_post/operation/update"  
+require_relative "../../../../app/concepts/blog_post/operation/delete"  
 require_relative "../../../../app/concepts/user/operation/create"  
 
 class BlogPostsOperationTest < MiniTest::Spec
@@ -82,22 +83,7 @@ class BlogPostsOperationTest < MiniTest::Spec
   end
   #:show end
 
-  #:notfoundedit
-  it "a user must be signed in to update" do 
-    owner = User::Create.({email: "owner@email.com", signed_in: true})
-    owner.success?.must_equal true
-
-    post = BlogPost::Create.({title: "Title", body: "Body more than 9", author: owner["model"].email, user_id: owner["model"].id}, "current_user" => owner["model"])
-    post.success?.must_equal true
-    post["model"].title.must_equal "Title"
-
-    result = BlogPost::Update.({id: post["model"].id+1}, "current_user" => owner["model"])
-    result.failure?.must_equal true
-    result["model"].title.must_equal "Post Not Found!"
-  end
-  #:notfoundedit end
-
-  #:wronguser
+  #:update
   it "only owner or admin update post" do 
     owner = User::Create.({email: "owner@email.com", signed_in: true})
     owner.success?.must_equal true
@@ -111,6 +97,12 @@ class BlogPostsOperationTest < MiniTest::Spec
     post = BlogPost::Create.({title: "Title", body: "Body more than 9", author: owner["model"].email, user_id: owner["model"].id}, "current_user" => owner["model"])
     post.success?.must_equal true
     post["model"].title.must_equal "Title"
+
+    #post not found
+    result = BlogPost::Update.({id: 100}, "current_user" => nil)
+    result.failure?.must_equal true
+    result["model"].title.must_equal "Post Not Found!"
+    BlogPost.find(post["model"].id).title.must_equal "Title"
 
     #no user
     assert_raises ApplicationController::NotAuthorizedError do
@@ -131,11 +123,69 @@ class BlogPostsOperationTest < MiniTest::Spec
     result = BlogPost::Update.({id: post["model"].id, title: "NewTitle"}, "current_user" => owner["model"])
     result.success?.must_equal true
     result["model"].title.must_equal "NewTitle"
+    BlogPost.find(post["model"].id).title.must_equal "NewTitle"
 
     result = BlogPost::Update.({id: post["model"].id, title: "AdminTitle"}, "current_user" => admin["model"])
     result.success?.must_equal true
     result["model"].title.must_equal "AdminTitle"
+    BlogPost.find(post["model"].id).title.must_equal "AdminTitle"
   end
-  #:wronguser end
+  #:update end
+
+  #:delete
+  it "only owner or admin can delete BlogPost" do 
+    owner = User::Create.({email: "owner@email.com", signed_in: true})
+    owner.success?.must_equal true
+
+    user = User::Create.({email: "user@email.com", signed_in: true})
+    user.success?.must_equal true
+
+    admin = User::Create.({email: "admin@email.com", signed_in: true})
+    admin.success?.must_equal true
+
+    post = BlogPost::Create.({title: "Title", body: "Body more than 9", author: owner["model"].email, user_id: owner["model"].id}, "current_user" => owner["model"])
+    post.success?.must_equal true
+    post["model"].title.must_equal "Title"
+
+    #post not found
+    result = BlogPost::Delete.({id: 100}, "current_user" => nil)
+    result.failure?.must_equal true
+    result["model"].title.must_equal "Post Not Found!"
+
+    #no user
+    assert_raises ApplicationController::NotAuthorizedError do
+      BlogPost::Delete.(
+        {id: post["model"].id},
+        "current_user" => nil)
+    end
+
+    #wrong user
+    assert_raises ApplicationController::NotAuthorizedError do
+      BlogPost::Delete.(
+        {id: post["model"].id},
+        "current_user" => user["model"])
+    end
+
+    result = BlogPost::Delete.({id: post["model"].id}, "current_user" => owner["model"])
+    result.success?.must_equal true
+    BlogPost.where("id like ?", post["model"].id).size.must_equal 0
+    # 1 notification has been sent
+
+    owner = User::Create.({email: "owner@email.com", signed_in: true})
+    owner.success?.must_equal true
+
+    admin = User::Create.({email: "admin@email.com", signed_in: true})
+    admin.success?.must_equal true
+
+    post = BlogPost::Create.({title: "Title", body: "Body more than 9", author: owner["model"].email, user_id: owner["model"].id}, "current_user" => owner["model"])
+    post.success?.must_equal true
+    post["model"].title.must_equal "Title"
+
+    result = BlogPost::Delete.({id: post["model"].id}, "current_user" => admin["model"])
+    result.success?.must_equal true
+    BlogPost.where("id like ?", post["model"].id).size.must_equal 0
+    # 1 notification has been sent
+  end
+  #:delete end
 
 end
