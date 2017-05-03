@@ -1,11 +1,10 @@
-#:postcontroller
+#:new
 class BlogPostsController < ApplicationController
-  #:new
   def new
     run BlogPost::Create::Present
     render BlogPost::Cell::New, @form
   end
-  #:new end
+#:new end
 
   #:create
   def create
@@ -13,6 +12,7 @@ class BlogPostsController < ApplicationController
       flash[:notice] = "#{result["model"].title} has been created"
       return redirect_to "/posts"
     end
+
     render BlogPost::Cell::New, @form
   end
   #:create end
@@ -58,4 +58,3 @@ class BlogPostsController < ApplicationController
   end
   #:delete end
 end
-#:postcontroller end
