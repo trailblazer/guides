@@ -1,8 +1,7 @@
 #:createop
 class BlogPost::Create < Trailblazer::Operation
-  #:newop
   class Present < Trailblazer::Operation
-    step Trailblazer::Operation::Policy::Guard( :authorize! )
+    step Policy::Guard( :authorize! )
     step Model(BlogPost, :new)
     step Contract::Build( constant: BlogPost::Contract::Create )
 
@@ -10,8 +9,8 @@ class BlogPost::Create < Trailblazer::Operation
       current_user == nil ? false : current_user.signed_in
     end
   end
-  #:newop end
 
+  #~present
   step Nested( Present )
   step Contract::Validate( )
   step Contract::Persist( )
@@ -20,5 +19,6 @@ class BlogPost::Create < Trailblazer::Operation
   def notify!(options, current_user:, model:, **)
     options["result.notify"] = BlogPost::Notification.(current_user, model)
   end
+  #~present end
 end
 #:createop end
