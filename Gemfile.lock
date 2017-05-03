@@ -1,11 +1,3 @@
-PATH
-  remote: ../trailblazer-rails
-  specs:
-    trailblazer-rails (1.0.2)
-      reform-rails (>= 0.1.4, < 0.2.0)
-      trailblazer (>= 2.0.0, < 2.1.0)
-      trailblazer-loader (>= 0.1.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -215,6 +207,10 @@ GEM
       declarative
       pipetree (>= 0.1.1, < 0.2.0)
       uber
+    trailblazer-rails (1.0.2)
+      reform-rails (>= 0.1.4, < 0.2.0)
+      trailblazer (>= 2.0.0, < 2.1.0)
+      trailblazer-loader (>= 0.1.0)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uber (0.1.0)
@@ -242,7 +238,7 @@ DEPENDENCIES
   sqlite3
   trailblazer (>= 2.0.3)
   trailblazer-cells
-  trailblazer-rails!
+  trailblazer-rails
 
 BUNDLED WITH
    1.14.6

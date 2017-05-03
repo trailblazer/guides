@@ -10,7 +10,7 @@ gem "simple_form"
 gem "dry-validation"
 
 gem "trailblazer", ">= 2.0.3"
-gem "trailblazer-rails", path: "../trailblazer-rails"
+gem "trailblazer-rails"
 gem "trailblazer-cells"
 gem "cells-rails"
 gem "cells-slim"
