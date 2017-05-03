@@ -2,8 +2,8 @@
 class BlogPostsController < ApplicationController
   #:new
   def new
-    run BlogPost::New
-    render BlogPost::Cell::New, result["contract.default"]
+    run BlogPost::Create::Present
+    render BlogPost::Cell::New, @form
   end
   #:new end
 
@@ -13,7 +13,7 @@ class BlogPostsController < ApplicationController
       flash[:notice] = "#{result["model"].title} has been created"
       return redirect_to "/posts"
     end
-    render BlogPost::Cell::New, result["contract.default"]
+    render BlogPost::Cell::New, @form
   end
   #:create end
 
