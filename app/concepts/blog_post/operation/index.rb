@@ -1,5 +1,3 @@
-require 'trailblazer/operation'
-
 #:indexop
 class BlogPost::Index < Trailblazer::Operation
   step :model!

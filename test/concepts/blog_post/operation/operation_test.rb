@@ -1,15 +1,8 @@
 require 'test_helper'
-require_relative "../../../../app/models/user"
-require_relative "../../../../app/models/blog_post"
-require_relative "../../../../app/concepts/blog_post/operation/create"  
-require_relative "../../../../app/concepts/blog_post/operation/show"  
-require_relative "../../../../app/concepts/blog_post/operation/update"  
-require_relative "../../../../app/concepts/blog_post/operation/delete"  
-require_relative "../../../../app/concepts/user/operation/create"  
 
 class BlogPostsOperationTest < MiniTest::Spec
-  
-  #:policy  
+
+  #:policy
   it "not signed_in no post" do
     result = BlogPost::Create.({title: "Title", body: "Body"}, "current_user" => nil)
     result.failure?.must_equal true
@@ -27,7 +20,7 @@ class BlogPostsOperationTest < MiniTest::Spec
   #:policy end
 
   #:validation
-  it "wrong input" do 
+  it "wrong input" do
     user = User::Create.({email: "user@email.com", signed_in: true})
     user.success?.must_equal true
 
@@ -44,7 +37,7 @@ class BlogPostsOperationTest < MiniTest::Spec
   #:validation end
 
   #:create
-  it "successfully create" do 
+  it "successfully create" do
     user = User::Create.({email: "user@email.com", signed_in: true})
     user.success?.must_equal true
 
@@ -84,7 +77,7 @@ class BlogPostsOperationTest < MiniTest::Spec
   #:show end
 
   #:update
-  it "only owner or admin update post" do 
+  it "only owner or admin update post" do
     owner = User::Create.({email: "owner@email.com", signed_in: true})
     owner.success?.must_equal true
 
@@ -133,7 +126,7 @@ class BlogPostsOperationTest < MiniTest::Spec
   #:update end
 
   #:delete
-  it "only owner or admin can delete BlogPost" do 
+  it "only owner or admin can delete BlogPost" do
     owner = User::Create.({email: "owner@email.com", signed_in: true})
     owner.success?.must_equal true
 
