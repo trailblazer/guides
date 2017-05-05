@@ -2,7 +2,7 @@
 class BlogPostsController < ApplicationController
   def new
     run BlogPost::Create::Present
-    render BlogPost::Cell::New, @form
+    render cell(BlogPost::Cell::New, @form), layout: false
   end
 #:new end
 
@@ -13,7 +13,7 @@ class BlogPostsController < ApplicationController
       return redirect_to "/posts"
     end
 
-    render BlogPost::Cell::New, @form
+    render cell(BlogPost::Cell::New, @form), layout: false
   end
   #:create end
 
@@ -27,7 +27,7 @@ class BlogPostsController < ApplicationController
   #:index
   def index
     run BlogPost::Index
-    render BlogPost::Cell::Index, result["model"]
+    render cell(BlogPost::Cell::Index, result["model"])
   end
   #:index end
 

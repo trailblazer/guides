@@ -7,18 +7,19 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   #:render
-  def render(cell_constant, model, options: {})
-    super(
-          html: cell(
-                cell_constant,
-                model,
-                { layout: Home::Cell::Layout,
-                  # context: { current_user: current_user, flash: flash }
-                  context: { flash: flash }
-                  }.merge(options))
-          )
-  end
+
   #:render end
+  # def render(cell_constant, model, options: {})
+  #   super(
+  #         html: cell(
+  #               cell_constant,
+  #               model,
+  #               { layout: Home::Cell::Layout,
+  #                 # context: { current_user: current_user, flash: flash }
+  #                 context: { flash: flash }
+  #                 }.merge(options))
+  #         )
+  # end
 
 #:run_options
 private
