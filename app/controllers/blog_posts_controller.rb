@@ -9,7 +9,6 @@ class BlogPostsController < ApplicationController
   #:create
   def create
     run BlogPost::Create do |result|
-      flash[:notice] = "#{result["model"].title} has been created"
       return redirect_to "/posts"
     end
 
