@@ -1,23 +1,15 @@
 #item
-module BlogPost::Cell  
+module BlogPost::Cell
   class Item < Trailblazer::Cell
-
     def title
       link_to model.title, model unless model == nil
     end
 
-    def subtitle
-      link_to model.subtitle, model unless model == nil
-    end
+    property :body
 
-    def author
-       model.author
+    def created_at
+      model.created_at.strftime("%d %B %Y")
     end
-
-    def time
-      model.created_at
-    end
-    
   end
 end
 #item end

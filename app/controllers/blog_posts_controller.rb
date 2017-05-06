@@ -9,7 +9,7 @@ class BlogPostsController < ApplicationController
   #:create
   def create
     run BlogPost::Create do |result|
-      return redirect_to "/posts"
+      return redirect_to blog_posts_path
     end
 
     render cell(BlogPost::Cell::New, @form), layout: false
@@ -26,7 +26,7 @@ class BlogPostsController < ApplicationController
   #:index
   def index
     run BlogPost::Index
-    render cell(BlogPost::Cell::Index, result["model"])
+    render cell(BlogPost::Cell::Index, result["model"]), layout: false
   end
   #:index end
 
