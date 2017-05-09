@@ -19,7 +19,7 @@ class BlogPostsController < ApplicationController
   #:show
   def show
     run BlogPost::Show
-    render BlogPost::Cell::Show, result["model"]
+    render cell(BlogPost::Cell::Show, result["model"]), layout: false
   end
   #:show end
 
@@ -30,30 +30,30 @@ class BlogPostsController < ApplicationController
   end
   #:index end
 
-  #:edit-update
+  #:edit
   def edit
-    run BlogPost::Edit
-    render BlogPost::Cell::Edit, result["contract.default"]
+    run BlogPost::Update::Present
+    render cell(BlogPost::Cell::Edit, @form), layout: false
   end
+  #:edit end
 
+  #:update
   def update
     run BlogPost::Update do |result|
       flash[:notice] = "#{result["model"].title} has been saved"
-      return redirect_to "/posts/#{result["model"].id}"
+      return redirect_to blog_post_path(result["model"].id)
     end
 
-    render BlogPost::Cell::Edit, result["contract.default"]
+    render cell(BlogPost::Cell::Edit, @form), layout: false
   end
-  #:edit-update end
+  #:update end
 
   #:delete
   def destroy
-    run BlogPost::Delete do
-      flash[:alert] = "Post deleted"
-      return redirect_to "/posts"
-    end
+    run BlogPost::Delete
 
-    render BlogPost::Cell::Edit, result["contract.default"]
+    flash[:alert] = "Post deleted"
+    redirect_to blog_posts_path
   end
   #:delete end
 end

@@ -1,12 +1,12 @@
-#:updateop
+#:update
 class BlogPost::Update < Trailblazer::Operation
-  step Nested(BlogPost::Edit)
-  step Contract::Validate()
-  step Contract::Persist()
-  step :notify!
-
-  def notify!(options, current_user:, model:, **)
-    options["result.notify"] = BlogPost::Notification.(current_user, model)
+  class Present < Trailblazer::Operation
+    step Model(BlogPost, :find_by)
+    step Contract::Build( constant: BlogPost::Contract::Create )
   end
+
+  step Nested(Present)
+  step Contract::Validate( key: :blog_post )
+  step Contract::Persist()
 end
-#:updateop end
+#:update end

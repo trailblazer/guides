@@ -1,5 +1,5 @@
 #:showop
 class BlogPost::Show < Trailblazer::Operation
-  step Model(BlogPost, :find_by) # why find_by
+  step Model(BlogPost, :find_by)
 end
 #:showop end
