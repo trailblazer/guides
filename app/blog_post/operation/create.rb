@@ -8,7 +8,9 @@ module Op1
     end
   end
   #:op end
-  end
+
+end
+
 module Op2
 
   #:step
@@ -109,7 +111,6 @@ module Success
 
 end
 
-
 module Input
 
   #:input
@@ -137,7 +138,6 @@ module Input
   #:input end
 
 end
-
 
 module Failure
 
