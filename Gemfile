@@ -18,6 +18,8 @@ gem "cells-slim"
 group :test do
   gem "rspec-rails"
   gem "capybara"
+
+  gem "minitest-line"
 end
 
 #:gemfile end

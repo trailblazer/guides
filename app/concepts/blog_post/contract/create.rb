@@ -13,8 +13,10 @@ module BlogPost::Contract
 
     #:validation
     validation do
-      required(:title).filled
-      required(:body).maybe(min_size?: 9)
+      params do
+        required(:title).filled
+        required(:body).maybe(min_size?: 9)
+      end
     end
     #:validation end
   end

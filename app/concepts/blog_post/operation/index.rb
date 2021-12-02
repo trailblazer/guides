@@ -1,9 +1,11 @@
 #:indexop
-class BlogPost::Index < Trailblazer::Operation
-  step :model!
+module BlogPost::Operation
+  class Index < Trailblazer::Operation
+    step :model!
 
-  def model!(options, *)
-    options["model"] = ::BlogPost.all.reverse_order
+    def model!(ctx, **)
+      ctx["model"] = ::BlogPost.all.reverse_order
+    end
   end
 end
 #:indexop end
