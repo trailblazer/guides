@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2021_12_02_144101) do
     t.string "body"
     t.string "author"
     t.integer "user_id"
+    t.datetime "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

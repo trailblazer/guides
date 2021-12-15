@@ -5,6 +5,7 @@ class CreateBlogPosts < ActiveRecord::Migration[5.1]
       t.string :body
       t.string :author
       t.integer :user_id
+      t.datetime :published_at
       t.timestamps
     end
   end
