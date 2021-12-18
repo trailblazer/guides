@@ -1,59 +1,29 @@
-#:new
 class BlogPostsController < ApplicationController
-  def new
-    run BlogPost::Create::Present
-    render cell(BlogPost::Cell::New, @form), layout: false
-  end
-#:new end
-
-  #:create
   def create
-    run BlogPost::Create do |result|
-      return redirect_to blog_posts_path
+    authorize! # provides {current_user}
+
+    @errors ||= {}
+
+    if blog_post_params = params[:blog_post]
+      if validate_for_create?(blog_post_params)
+
+        @blog_post = BlogPost.new(current_user: @current_user, **blog_post_params)
+
+        if @blog_post.save
+          CreateMailer.new(blog_post: @blog_post).send_email
+
+        end
+      else
+        @errors[:title] = ["Title is invalid"]
+      end
     end
 
-    render cell(BlogPost::Cell::New, @form), layout: false
+    # render
   end
-  #:create end
 
-  #:show
-  def show
-    run BlogPost::Show
-    render cell(BlogPost::Cell::Show, result["model"]), layout: false
+  private
+
+  def validate_for_create?(params)
+    params[:title].present? && params[:body].present?
   end
-  #:show end
-
-  #:index
-  def index
-    run BlogPost::Index
-    render cell(BlogPost::Cell::Index, result["model"]), layout: false
-  end
-  #:index end
-
-  #:edit
-  def edit
-    run BlogPost::Update::Present
-    render cell(BlogPost::Cell::Edit, @form), layout: false
-  end
-  #:edit end
-
-  #:update
-  def update
-    run BlogPost::Update do |result|
-      flash[:notice] = "#{result["model"].title} has been saved"
-      return redirect_to blog_post_path(result["model"].id)
-    end
-
-    render cell(BlogPost::Cell::Edit, @form), layout: false
-  end
-  #:update end
-
-  #:delete
-  def destroy
-    run BlogPost::Delete
-
-    flash[:alert] = "Post deleted"
-    redirect_to blog_posts_path
-  end
-  #:delete end
 end

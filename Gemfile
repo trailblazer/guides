@@ -8,11 +8,12 @@ gem "sqlite3"
 gem "simple_form"
 gem "dry-validation"
 
-gem "trailblazer", ">= 2.1.0"
-gem "trailblazer-rails"
-gem "trailblazer-cells"
-gem "cells-rails"
-gem "cells-slim"
+# gem "trailblazer", ">= 2.1.0"
+# gem "trailblazer-rails"
+# gem "trailblazer-cells"
+# gem "cells-rails"
+# gem "cells-slim"
+gem "trailblazer-operation"
 
 
 group :test do
