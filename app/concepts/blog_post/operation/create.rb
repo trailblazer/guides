@@ -15,7 +15,7 @@ module BlogPost::Operation
    #    end
    #  end
   class Create < Trailblazer::Operation
-    step :extract_params
+    step :extract_params, fail_fast: true
     step :validate_for_create?
     fail :add_errors
     step :create_model

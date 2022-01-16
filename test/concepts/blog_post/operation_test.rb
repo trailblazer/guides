@@ -20,14 +20,14 @@ class BlogPostOperationTest < MiniTest::Spec
   end
 
   it "fails with invalid params" do
-    result = BlogPost::Operation::Create.call(params: {}, errors: {} )
+    result = BlogPost::Operation::Create.wtf?(params: {}, errors: {} )
 
     assert_equal false, result.success?
-    assert_equal({:title=>["Title is invalid"]}, result[:errors])
+    assert_equal({}, result[:errors])
   end
 
   it "fails with invalid title and body" do
-    result = BlogPost::Operation::Create.wtf?(params: {title: "", body: ""}, errors: {} )
+    result = BlogPost::Operation::Create.wtf?(params: {blog_post: {title: "", body: ""}}, errors: {} )
 
     assert_equal false, result.success?
     assert_equal({:title=>["Title is invalid"]}, result[:errors])
