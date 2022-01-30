@@ -1,0 +1,19 @@
+<div class="header">
+  Total: <%= @total %>
+</div>
+
+<%= @model.each do |blog_post| %>
+  <h2>
+    <%= blog_post.title %>
+  </h2>
+
+  <div class="created_at">
+    Posted at <%= blog_post.created_at %>
+  </div>
+
+  <div class="body">
+    <%= blog_post.body %>
+  </div>
+
+  <hr>
+<% end %>

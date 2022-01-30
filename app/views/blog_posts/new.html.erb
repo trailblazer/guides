@@ -1,0 +1,15 @@
+#:new
+<h1>New Post</h1>
+
+<%= simple_form_for @form, as: :blog_post, url: blog_posts_path do |f| %>
+  <div class="row">
+      <%= f.input :title, placeholder: "Title", label: false %>
+  </div>
+  <div class="row">
+      <%= f.input :body, placeholder: "Say it out loud!", label: false %>
+  </div>
+  <div class="row">
+      <%= f.submit "Create Post" %>
+  </div>
+<% end %>
+#:new end
