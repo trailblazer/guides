@@ -1,5 +1,8 @@
 #:new
 class BlogPostsController < ApplicationController
+  # The #run method comes from trailblazer-rails.
+  #
+  #
   def new
     run BlogPost::Operation::Create::Present do |ctx|
 
@@ -11,19 +14,21 @@ class BlogPostsController < ApplicationController
 
   #:create
   def create
-    ctx = run BlogPost::Operation::Create do |ctx|
+    _ctx = run BlogPost::Operation::Create do |ctx|
       return redirect_to blog_posts_path
     end
 
-    @form = ctx["contract.default"]
+    @form = _ctx["contract.default"]
     render :new
   end
   #:create end
 
   #:show
   def show
-    run BlogPost::Operation::Show
-    render cell(BlogPost::Cell::Show, result["model"]), layout: false
+    run BlogPost::Operation::Show do |ctx|
+      @model = ctx[:model]
+      render
+    end
   end
   #:show end
 
@@ -41,19 +46,27 @@ class BlogPostsController < ApplicationController
 
   #:edit
   def edit
-    run BlogPost::Operation::Update::Present
-    render cell(BlogPost::Cell::Edit, @form), layout: false
+    run BlogPost::Operation::Update::Present do |ctx|
+      @form   = ctx["contract.default"]
+      @title  = "Editing #{ctx[:model].title}"
+
+      render
+    end
+
   end
   #:edit end
 
   #:update
   def update
-    run BlogPost::Operation::Update do |result|
-      flash[:notice] = "#{result["model"].title} has been saved"
-      return redirect_to blog_post_path(result["model"].id)
+    _ctx = run BlogPost::Operation::Update do |ctx|
+      flash[:notice] = "#{ctx[:model].title} has been saved"
+      return redirect_to blog_post_path(ctx[:model].id)
     end
 
-    render cell(BlogPost::Cell::Edit, @form), layout: false
+    @form   = _ctx["contract.default"] # FIXME: redundant to #create!
+    @title  = "Editing #{_ctx[:model].title}"
+
+    render :edit
   end
   #:update end
 
@@ -61,7 +74,7 @@ class BlogPostsController < ApplicationController
   def destroy
     run BlogPost::Operation::Delete
 
-    flash[:alert] = "Post deleted"
+    flash[:notice] = "Post deleted"
     redirect_to blog_posts_path
   end
   #:delete end

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello!</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="flash">
+      <%= flash[:notice] %>
+    </div>
+
+    <div class="name">
+      <ul>
+        <li><%= link_to "New", new_blog_post_path %></li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <%= yield %>
+  </body>
+</html>

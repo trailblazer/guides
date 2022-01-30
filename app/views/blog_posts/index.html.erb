@@ -13,7 +13,14 @@
 
   <div class="body">
     <%= blog_post.body %>
+
   </div>
+  <p>
+   <%= link_to "Edit", edit_blog_post_path(blog_post.id) %>
+  </p>
+  <p>
+   <%= button_to "Delete", blog_post_path(blog_post.id), method: :delete %>
+  </p>
 
   <hr>
 <% end %>

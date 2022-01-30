@@ -2,7 +2,7 @@
 .row.new
   h1 New Post
 
-  = simple_form_for model do |f|
+  = simple_form_for model, as: :blog_post, url: "/" do |f|
     .row
       .col-sm-12
         = f.input :title, placeholder: "Title", label: false

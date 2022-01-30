@@ -1,0 +1,15 @@
+<h2>
+  <%= @model.title %>
+</h2>
+
+<div class="created_at">
+  Posted at <%= @model.created_at %>
+</div>
+
+<div class="body">
+  <%= @model.body %>
+
+</div>
+<p>
+ <%= link_to "Edit", edit_blog_post_path(@model.id) %>
+</p>

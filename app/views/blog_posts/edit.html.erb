@@ -1,0 +1,15 @@
+#:edit
+<h1>Editing "<%= @model.title %>"</h1>
+
+<%= simple_form_for @form, as: :blog_post, url: blog_post_path(@model.id), method: :patch do |f| %>
+  <div class="row">
+      <%= f.input :title, placeholder: "Title", label: false %>
+  </div>
+  <div class="row">
+      <%= f.input :body, placeholder: "Say it out loud!", label: false %>
+  </div>
+  <div class="row">
+      <%= f.submit "Create Post" %>
+  </div>
+<% end %>
+#:edit end
