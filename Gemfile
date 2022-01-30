@@ -14,6 +14,8 @@ gem "dry-validation"
 # gem "cells-rails"
 # gem "cells-slim"
 gem "trailblazer-operation"
+gem "dry-validation"
+gem "trailblazer-errors", path: "../trailblazer-errors"
 
 
 group :test do
