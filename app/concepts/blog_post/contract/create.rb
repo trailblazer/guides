@@ -1,7 +1,5 @@
 #:contract
-require "reform"
-require "reform/form/dry"
-
+# app/concepts/blog_post/contract/create.rb
 module BlogPost::Contract
   class Create < Reform::Form
     include Dry

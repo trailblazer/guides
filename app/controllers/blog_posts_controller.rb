@@ -1,8 +1,22 @@
 #:new
+# app/controllers/blog_posts_controller.rb
 class BlogPostsController < ApplicationController
+  #~doc
   # The #run method comes from trailblazer-rails.
+  # https://trailblazer.to/2.1/docs/trailblazer.html#trailblazer-rails-run
   #
+  # It runs the given operation and automatically passes `{params: params}`
+  # into the operation invocation, as so
   #
+  #    def new
+  #      ctx = BlogPost::Operation::Create::Present.call(params: params)
+  #
+  # You can configure additional default variables going into the operation
+  # by overriding {Controller#_run_options}:
+  # https://trailblazer.to/2.1/docs/trailblazer.html#trailblazer-rails-run-controller-runtime-variables
+  #
+  # An alternative approach is to use endpoints - we will do this in a later chapter.
+  #~doc end
   def new
     run BlogPost::Operation::Create::Present do |ctx|
 
@@ -13,6 +27,7 @@ class BlogPostsController < ApplicationController
 #:new end
 
   #:create
+  # app/controllers/blog_posts_controller.rb
   def create
     _ctx = run BlogPost::Operation::Create do |ctx|
       return redirect_to blog_posts_path

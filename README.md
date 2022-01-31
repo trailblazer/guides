@@ -11,6 +11,7 @@ This version does not use Cells, but normal Rails views to render the HTML views
 ## Files we didn't discuss
 
 * **Layout** We use a default layout template in `app/views/layouts/application.html.erb` which the controller uses automatically: https://guides.rubyonrails.org/layouts_and_rendering.html#finding-layouts
+* **Initializer** `config/initializers/trailblazer.rb` requires `reform` and `dry/validation`.
 
 ## TODO
 
