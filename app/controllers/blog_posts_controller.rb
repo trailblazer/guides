@@ -39,6 +39,7 @@ class BlogPostsController < ApplicationController
   #:create end
 
   #:show
+  # app/controllers/blog_posts_controller.rb
   def show
     run BlogPost::Operation::Show do |ctx|
       @model = ctx[:model]
@@ -48,6 +49,7 @@ class BlogPostsController < ApplicationController
   #:show end
 
   #:index
+  # app/controllers/blog_posts_controller.rb
   def index
     run BlogPost::Operation::Index do |ctx|
       @model = ctx[:model]
@@ -60,6 +62,7 @@ class BlogPostsController < ApplicationController
   #:index end
 
   #:edit
+  # app/controllers/blog_posts_controller.rb
   def edit
     run BlogPost::Operation::Update::Present do |ctx|
       @form   = ctx["contract.default"]
@@ -72,6 +75,7 @@ class BlogPostsController < ApplicationController
   #:edit end
 
   #:update
+  # app/controllers/blog_posts_controller.rb
   def update
     _ctx = run BlogPost::Operation::Update do |ctx|
       flash[:notice] = "#{ctx[:model].title} has been saved"
@@ -86,6 +90,7 @@ class BlogPostsController < ApplicationController
   #:update end
 
   #:delete
+  # app/controllers/blog_posts_controller.rb
   def destroy
     run BlogPost::Operation::Delete
 

@@ -1,4 +1,5 @@
 #:edit
+# app/views/blog_posts/edit.html.erb
 <h1>Editing "<%= @model.title %>"</h1>
 
 <%= simple_form_for @form, as: :blog_post, url: blog_post_path(@model.id), method: :patch do |f| %>

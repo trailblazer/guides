@@ -1,10 +1,10 @@
 #:indexop
 module BlogPost::Operation
   class Index < Trailblazer::Operation
-    step :model!
+    step :find_all
 
-    def model!(ctx, **)
-      ctx["model"] = ::BlogPost.all.reverse_order
+    def find_all(ctx, **)
+      ctx[:model] = ::BlogPost.all.reverse_order
     end
   end
 end
