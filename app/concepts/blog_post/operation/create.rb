@@ -15,7 +15,7 @@ module BlogPost::Operation
    #    end
    #  end
   class Create < Trailblazer::Operation
-    Validations = Dry::Validation.Contract do
+    class Validations < Dry::Validation::Contract
       params do
         required(:title).filled
         required(:body).filled
@@ -34,7 +34,7 @@ module BlogPost::Operation
     end
 
     def validate_for_create?(ctx, my_params:, **)
-      result = Validations.call(my_params)
+      result = Validations.new.call(my_params)
       ctx[:errors] = result.errors
 
       result.success?
