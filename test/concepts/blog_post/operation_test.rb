@@ -16,20 +16,20 @@ class BlogPostOperationTest < MiniTest::Spec
     assert_equal "Great", model.body
     assert_equal "asdf", model.author
 
-    assert_equal({}, result[:errors])
+    assert_equal({}, result[:errors].to_h)
   end
 
   it "fails with invalid params" do
-    result = BlogPost::Operation::Create.wtf?(params: {}, errors: {} )
+    result = BlogPost::Operation::Create.wtf?(params: {})
 
     assert_equal false, result.success?
-    assert_equal({}, result[:errors])
+    assert_nil(result[:errors])
   end
 
   it "fails with invalid title and body" do
-    result = BlogPost::Operation::Create.wtf?(params: {blog_post: {title: "", body: ""}}, errors: {} )
+    result = BlogPost::Operation::Create.wtf?(params: {blog_post: {title: "", body: ""}} )
 
     assert_equal false, result.success?
-    assert_equal({:title=>["Title is invalid"]}, result[:errors])
+    assert_equal({:title=>["must be filled"], :body=>["must be filled"]}, result[:errors].to_h)
   end
 end

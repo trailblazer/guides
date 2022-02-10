@@ -15,9 +15,15 @@ module BlogPost::Operation
    #    end
    #  end
   class Create < Trailblazer::Operation
+    Validations = Dry::Validation.Contract do
+      params do
+        required(:title).filled
+        required(:body).filled
+      end
+    end
+
     step :extract_params, fail_fast: true
     step :validate_for_create?
-    fail :add_errors
     step :create_model
     step :notify
 
@@ -28,11 +34,10 @@ module BlogPost::Operation
     end
 
     def validate_for_create?(ctx, my_params:, **)
-      my_params[:title].present? && my_params[:body].present?
-    end
+      result = Validations.call(my_params)
+      ctx[:errors] = result.errors
 
-    def add_errors(ctx, errors:, **)
-      errors[:title] = ["Title is invalid"]
+      result.success?
     end
 
     def create_model(ctx, my_params:, current_user:, **)
