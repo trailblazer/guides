@@ -22,26 +22,12 @@ module BlogPost::Operation
       end
     end
 
-    step :extract_params, fail_fast: true
-    step :validate_for_create?
+    step Contract::Validate(constant: Validations.new, key: :blog_post)
     step :create_model
     step :notify
 
-    def extract_params(ctx, params:, **)
-      blog_post_params = params[:blog_post]
-
-      ctx[:my_params] = blog_post_params
-    end
-
-    def validate_for_create?(ctx, my_params:, **)
-      result = Validations.new.call(my_params)
-      ctx[:errors] = result.errors
-
-      result.success?
-    end
-
-    def create_model(ctx, my_params:, current_user:, **)
-      ctx[:blog_post] = BlogPost.new(author: current_user, **my_params)
+    def create_model(ctx, current_user:, **)
+      ctx[:blog_post] = BlogPost.new(author: current_user, **ctx["result.contract.default"].to_h)
       ctx[:blog_post].save
     end
 
