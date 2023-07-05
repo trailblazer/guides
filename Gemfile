@@ -14,12 +14,12 @@ gem "dry-validation"
 # gem "cells-rails"
 # gem "cells-slim"
 gem "trailblazer-operation"
+gem "trailblazer-macro-contract"
 gem "dry-validation"
 gem "trailblazer-errors", path: "../trailblazer-errors"
 
 
 group :test do
-  gem "rspec-rails"
   gem "capybara"
 
   gem "minitest-line"
