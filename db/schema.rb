@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2023_07_05_165343) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.string "type"
+    t.string "category"
     t.integer "user_id"
     t.integer "record_id"
     t.datetime "created_at", precision: 6, null: false

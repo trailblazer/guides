@@ -24,15 +24,11 @@ module BlogPost::Operation
 
     step Contract::Validate(constant: Validations.new, key: :blog_post)
     step :create_model
-    step :notify
+    step Subprocess(Notify)
 
     def create_model(ctx, current_user:, **)
-      ctx[:blog_post] = BlogPost.new(author: current_user, **ctx["result.contract.default"].to_h)
+      ctx[:blog_post] = BlogPost.new(user_id: current_user.id, **ctx["result.contract.default"].to_h)
       ctx[:blog_post].save
-    end
-
-    def notify(ctx, blog_post:, **)
-      CreateMailer.new(blog_post: blog_post).send_email
     end
   end
 end
