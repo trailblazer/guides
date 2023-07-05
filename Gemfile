@@ -16,7 +16,6 @@ gem "dry-validation"
 gem "trailblazer-operation"
 gem "trailblazer-macro-contract"
 gem "dry-validation"
-gem "trailblazer-errors", path: "../trailblazer-errors"
 
 
 group :test do
